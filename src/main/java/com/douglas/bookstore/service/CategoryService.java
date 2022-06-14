@@ -3,6 +3,8 @@ package com.douglas.bookstore.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,17 @@ public class CategoryService {
 		obj.setName(objDto.getName());
 		obj.setDescription(objDto.getDescription());
 		return repository.save(obj);
+	}
+	
+	public Category patch(Integer id, CategoryDTO objDto) {
+		Category obj = findById(id);
+		if(objDto.getName() != null)obj.setName(objDto.getName());
+		if(objDto.getDescription() != null)obj.setDescription(objDto.getDescription());
+		return repository.save(patchValidation(obj));
+	}
+	
+	public Category patchValidation(@Valid Category obj) {
+		return obj;
 	}
 	
 	public void delete(Integer id) {

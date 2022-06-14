@@ -3,6 +3,8 @@ package com.douglas.bookstore.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,13 +48,17 @@ public class BookService {
 	public Book patch(Integer id, Book obj) {
 		Book newObj = findById(id);
 		patchData(newObj, obj);
-		return repository.save(newObj);
+		return repository.save(patchValidation(newObj));
 	}
 	
 	private void patchData(Book newObj, Book obj) {
 		if(obj.getTitle() != null)newObj.setTitle(obj.getTitle());
 		if(obj.getAuthor() != null)newObj.setAuthor(obj.getAuthor());
 		if(obj.getText() != null)newObj.setText(obj.getText());
+	}
+	
+	public Book patchValidation(@Valid Book obj) {
+		return obj;
 	}
 
 	public Book create(Integer id_cat, Book obj) {

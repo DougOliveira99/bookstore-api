@@ -54,7 +54,7 @@ public class BookResource {
 	}
 	
 	@PatchMapping(value = "/{id}")
-	public ResponseEntity<Book> updatePatch(@PathVariable Integer id, @Valid @RequestBody Book obj) {
+	public ResponseEntity<Book> patch(@PathVariable Integer id, @RequestBody Book obj) {
 		Book newObj = service.patch(id, obj);
 		return ResponseEntity.ok().body(newObj);
 	}
